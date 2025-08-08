@@ -22,7 +22,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:5000/stylize', {
+      const response = await fetch('https://neural-style-transfer-backend.onrender.com/stylize', {
         method: 'POST',
         body: formData
       });
@@ -63,21 +63,119 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100 flex flex-col items-center">
-      <h1 className="text-3xl font-bold mb-4">Neural Style Transfer</h1>
-      <UploadForm onStylize={handleStylize} />
-      {loading && <p className="mt-4 text-blue-500">Stylizing... Please wait.</p>}
-      {error && (
-        <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-          <strong>Error:</strong> {error}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white flex flex-col">
+      {/* Header */}
+      <header className="bg-gray-800 border-b border-gray-700 shadow-lg">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                Digi Image Styler
+              </h1>
+            </div>
+            <div className="text-sm text-gray-400">
+              AI-Powered Image Stylization
+            </div>
+          </div>
         </div>
-      )}
-      {outputImage && (
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Stylized Output:</h2>
-          <img src={outputImage} alt="Output" className="rounded shadow" />
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-1 container mx-auto px-6 py-8">
+        {/* Welcome Section */}
+        <section className="text-center mb-12">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gray-800 rounded-xl p-6 shadow-lg">
+              <h3 className="text-2xl font-semibold mb-4 text-blue-400">What is Neural Style Transfer?</h3>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                Neural Style Transfer is a technique that uses deep learning to apply the visual style of one image 
+                (like a famous painting) to another image (like your photo) while preserving the content and structure 
+                of the original image. This technology combines the power of convolutional neural networks with 
+                artistic creativity to create stunning visual transformations.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Upload Form Section */}
+        <section className="mb-12">
+          <UploadForm onStylize={handleStylize} />
+        </section>
+
+        {/* Loading and Error States */}
+        {loading && (
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center space-x-2 bg-blue-900 bg-opacity-50 px-6 py-3 rounded-lg">
+              <div className="animate-spin border-2 border-t-transparent border-blue-400 rounded-full w-5 h-5"></div>
+              <span className="text-blue-400 font-medium">Processing your images... Please wait.</span>
+            </div>
+          </div>
+        )}
+        
+        {error && (
+          <div className="max-w-2xl mx-auto mb-8 p-4 bg-red-900 bg-opacity-50 border border-red-500 text-red-200 rounded-lg">
+            <div className="flex items-center space-x-2">
+              <span className="text-xl">⚠️</span>
+              <strong>Error:</strong> {error}
+            </div>
+          </div>
+        )}
+
+        {/* Output Section */}
+        {outputImage && (
+          <section className="text-center">
+            <h2 className="text-2xl font-bold mb-6 text-green-400">✨ Your Stylized Image</h2>
+            <div className="max-w-2xl mx-auto">
+              <img 
+                src={outputImage} 
+                alt="Stylized output" 
+                className="rounded-xl shadow-2xl border-2 border-gray-600" 
+              />
+              <div className="mt-4">
+                <a 
+                  href={outputImage} 
+                  download="stylized-image.png"
+                  className="inline-flex items-center space-x-2 bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-semibold transition-colors"
+                >
+                  <span>💾</span>
+                  <span>Download Image</span>
+                </a>
+              </div>
+            </div>
+          </section>
+        )}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 border-t border-gray-700">
+        <div className="container mx-auto px-6 py-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-blue-400">Technologies Used</h3>
+              <ul className="text-gray-400 text-sm space-y-2">
+                <li>React.js Frontend</li>
+                <li>Python Flask Backend</li>
+                <li>TensorFlow/PyTorch</li>
+                <li>Tailwind CSS</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-blue-400">Licenses</h3>
+              <ul className="text-gray-400 text-sm space-y-2">
+                <li>MIT License</li>
+                <li>Apache 2.0</li>
+                <li>Creative Commons</li>
+                <li>Open Source</li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-gray-700 mt-8 pt-6 text-center">
+            <p className="text-gray-500 text-sm">
+              © 2024 Neural Style Transfer. Built with ❤️ using modern web technologies.
+            </p>
+          </div>
         </div>
-      )}
+      </footer>
     </div>
   );
 }
