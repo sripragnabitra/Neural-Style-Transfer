@@ -16,7 +16,19 @@ While this method is academically popular and produces high-quality results in r
 
 2. **Poor Visual Results for Quick Runs**  
    - Reducing training time to speed up the process caused noisy and heavily distorted outputs.  
-
+   Example result from the **VGG approach** (quick run):  
+   <table>
+  <tr>
+    <td align="center"><img src="backend/static/content3.jpeg" alt="Content Image" width="250"/></td>
+    <td align="center"><img src="backend/static/style3.jpg" alt="Style Image" width="250"/></td>
+    <td align="center"><img src="backend/static/output3.png" alt="Styled Image" width="250"/></td>
+  </tr>
+  <tr>
+    <td align="center">Content Image</td>
+    <td align="center">Style Image</td>
+    <td align="center">Styled Output</td>
+  </tr>
+</table>
 Because of this, I decided to switch to a **Feed-Forward Pre-Trained Model**.
 
 ---
