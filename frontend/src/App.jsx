@@ -22,7 +22,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('https://neural-style-transfer-backend.onrender.com/stylize', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/stylize`, {
         method: 'POST',
         body: formData
       });
