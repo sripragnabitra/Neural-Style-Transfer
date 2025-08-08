@@ -6,6 +6,54 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const resizeImage = (file, maxWidth = 512, maxHeight = 512) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+
+      img.onload = () => {
+        let { width, height } = img;
+
+        if (width > maxWidth) {
+          height = Math.round((maxWidth / width) * height);
+          width = maxWidth;
+        }
+        if (height > maxHeight) {
+          width = Math.round((maxHeight / height) * width);
+          height = maxHeight;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const resizedFile = new File([blob], file.name, { type: file.type });
+              resolve(resizedFile);
+            } else {
+              reject(new Error('Canvas is empty'));
+            }
+          },
+          file.type,
+          0.95 // quality param for image/jpeg (optional)
+        );
+      };
+      img.onerror = reject;
+
+      reader.readAsDataURL(file);
+    });
+  };
+
   useEffect(() => {
     return () => {
       if (outputImage && typeof outputImage === "string" && outputImage.startsWith("blob:")) {
@@ -15,13 +63,16 @@ function App() {
   }, [outputImage]);
 
   const handleStylize = async (contentFile, styleFile) => {
-    const formData = new FormData();
-    formData.append('content', contentFile);
-    formData.append('style', styleFile);
-
     setLoading(true);
     setError(null);
     try {
+      const resizedContent = await resizeImage(contentFile);
+      const resizedStyle = await resizeImage(styleFile);
+  
+      const formData = new FormData();
+      formData.append('content', resizedContent);
+      formData.append('style', resizedStyle);
+  
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/stylize`, {
         method: 'POST',
         body: formData
