@@ -58,7 +58,7 @@ The new implementation uses a **pre-trained TensorFlow Hub model**:
 
 ---
 
-## ⚡ Running the Project
+## ⚡ Running the Project for Development
 
 1. **Backend Setup**
    ```bash
@@ -74,9 +74,21 @@ The new implementation uses a **pre-trained TensorFlow Hub model**:
    npm install
    npm run dev
    
-3. **Usage**
-
+## ⚡ Running the Project for Production
+1. 1. **Setting up the render app for Backend deployment**
+  - Search for the backend repository with the same name
+  - https://neural-style-transfer-backend.onrender.com
+   
+2. **Frontend is deployed on Vercel app**
+   https://neural-style-transfer-two.vercel.app/
 - Open the frontend in your browser.
 - Upload a content image and a style image.
 - Wait for processing (~1–2 seconds).
 - Download the styled output.
+
+- Note: Didn't work much on the frontend UI because the sole purpose of the project is to learn about TF model and perform neural style transfer and also learn how to deploy it
+
+---
+
+Some Output Pictures Obtained:
+
