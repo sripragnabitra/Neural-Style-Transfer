@@ -67,17 +67,23 @@ The new implementation uses a **pre-trained TensorFlow Hub model**:
    source .venv/bin/activate   # Windows: .venv\Scripts\activate
    pip install -r requirements.txt
    python app.py
+   
+You should see this on http://localhost:5000/
+{"status": "Backend is running"}
 
 2. **Frontend Setup**
    ```bash
    cd frontend
    npm install
-   npm run dev
+   npm start
+The page should open on http://localhost:3000/
    
 ## ⚡ Running the Project for Production
 1. 1. **Setting up the render app for Backend deployment**
   - Search for the backend repository with the same name
-  - https://neural-style-transfer-backend.onrender.com
+  - Deploy backend on Render
+  - You should see this on https://neural-style-transfer-backend.onrender.com
+{"status": "Backend is running"}
    
 2. **Frontend is deployed on Vercel app**
    https://neural-style-transfer-two.vercel.app/
@@ -88,7 +94,6 @@ The new implementation uses a **pre-trained TensorFlow Hub model**:
 
 - Note: Didn't work much on the frontend UI because the sole purpose of the project is to learn about TF model and perform neural style transfer and also learn how to deploy it
 
----
-
-Some Output Pictures Obtained:
+--
+Thanks ❤️
 
