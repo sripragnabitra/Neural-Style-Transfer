@@ -6,6 +6,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+
   const resizeImage = (file, maxWidth = 512, maxHeight = 512) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -73,7 +75,7 @@ function App() {
       formData.append('content', resizedContent);
       formData.append('style', resizedStyle);
   
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/stylize`, {
+      const response = await fetch(`${backendURL}/stylize`, {
         method: 'POST',
         body: formData
       });
@@ -89,12 +91,9 @@ function App() {
         }
         throw new Error(errorMessage);
       }
-      console.log("Response headers:", [...response.headers.entries()]);
-      console.log("Content-Type:", response.headers.get("Content-Type"));
 
       const blob = await response.blob();
       if (!blob.type.startsWith("image/")) {
-        console.error("Unexpected blob type:", blob.type);
         throw new Error("Expected an image response from server.");
       }
       if (outputImage  && typeof outputImage === "string" && outputImage.startsWith("blob:")) {
